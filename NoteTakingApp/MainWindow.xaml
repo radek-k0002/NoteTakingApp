@@ -1,0 +1,69 @@
+﻿<Window x:Class="NoteTakingApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NoteTakingApp"
+        mc:Ignorable="d"
+        Title="Note Taking Application" MinHeight="350" Height="450" MinWidth="490" Width="800" ContentRendered="Window_ContentRendered" Closed="Window_Closed">
+    <Window.Resources>
+        <Style TargetType="{x:Type Border}">
+            <Setter Property="CornerRadius" Value="0"/>
+        </Style>
+        <DataTemplate x:Key="NoteTemplate">
+            <ContentControl MouseDoubleClick="ReadText_Click" Cursor="Hand">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock MaxWidth="150" TextWrapping="Wrap" Padding="0,0,0,3" VerticalAlignment="Center" Text="{Binding Path=Title}"/>
+                    <Button Grid.Column="1" Margin="10,0,0,0" Height="25" Width="25" Click="DeleteText_Click" Background="Transparent" BorderThickness="0">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="\Assets\Icons\remove.png" Width="15"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </ContentControl>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*" MaxWidth="300"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBox Padding="3" MaxHeight="60" Name="Title" Grid.Column="1" AcceptsReturn="True" Margin="10,5,0,5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" KeyUp="Title_KeyboardInput" KeyDown="Title_KeyboardInput"></TextBox>
+        <Label VerticalContentAlignment="Center" Margin="5,0,0,0">Title:</Label>
+        <TextBox Padding="3" Name="TextMsg" Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Margin="10,0,0,5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"></TextBox>
+        <Label Grid.Row="1" Margin="5" Content="Text:"/>
+        <Label Grid.Column="2" HorizontalContentAlignment="Center" Margin="5,5,5,0" VerticalContentAlignment="Center">Text List</Label>
+        <ListBox IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" ItemTemplate="{StaticResource NoteTemplate}" Padding="5,10,5,0" Name="TextList" Grid.Row="1" Grid.Column="2" Margin="5,0,5,5">
+        </ListBox>
+        <Button Name="NewText" Grid.Row="2" Grid.Column="1" Margin="0,0,50,0" Width="25" Height="25" HorizontalAlignment="Center" Background="Transparent" BorderThickness="0" Click="NewText_Click">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="\Assets\Icons\new.png" Width="20" Height="20"/>
+            </StackPanel>
+        </Button>
+        <Button Name="SaveText" Grid.Row="2" Grid.Column="1" Margin="80,0,0,0" Width="55" Height="25" HorizontalAlignment="Center" Click="SaveText_Click">Save</Button>
+        <Button Name="SaveAsText" Grid.Row="2" Grid.Column="1" Margin="0,0,20,0" Width="55" Height="25" HorizontalAlignment="Right" Click="SaveAsText_Click">Save As</Button>
+
+        <Button Name="LoadFile" Grid.Row="2" Grid.Column="1" Margin="20,0,0,0" Width="55" Height="25" HorizontalAlignment="Left" Click="LoadFile_Click">Load</Button>
+
+        <Button  Name="ReadText" Grid.Row="2" Grid.Column="2" Margin="0,0,80,0" Width="25" Height="25" HorizontalAlignment="Center" Background="Transparent" BorderThickness="0" Click="ReadText_Click">&lt;&lt;</Button>
+        <Button Name="RefreshTextList" Grid.Row="2" Grid.Column="2" Margin="80,0,0,0" Width="25" Height="25" HorizontalAlignment="Center" Background="Transparent" BorderThickness="0" Click="RefreshTextList_Click">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="\Assets\Icons\refresh.png" Width="20" Height="20"/>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>
